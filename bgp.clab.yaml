@@ -13,6 +13,7 @@ topology:
 
     r1-node1:
       kind: juniper_vsrx
+      startup-config: r1-node1.cfg
 
   links:
     - endpoints: ["r1-node0:ge-0/0/5", "r1-node1:ge-0/0/5"]  # Control link
