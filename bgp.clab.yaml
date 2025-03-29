@@ -15,7 +15,7 @@ topology:
       kind: juniper_vsrx
 
   links:
-    - endpoints: ["node0:ge-0/0/5", "node1:ge-0/0/5"]  # Control link
-    - endpoints: ["node0:ge-0/0/6", "node1:ge-0/0/6"]  # Fabric link 
-    - endpoints: ["node0:ge-0/0/0", "node1:ge-0/0/0"]  # Data cross-connect
+    - endpoints: ["r1-node0:ge-0/0/5", "r1-node1:ge-0/0/5"]  # Control link
+    - endpoints: ["r1-node0:ge-0/0/6", "r1-node1:ge-0/0/6"]  # Fabric link 
+    - endpoints: ["r1-node0:ge-0/0/0", "r1-node1:ge-0/0/0"]  # Data cross-connect
 
