@@ -5,4 +5,4 @@
 !.gitignore
 !as65000-r1.cfg
 !as65001-r1.cfg
-!bgp.clab.yaml
+!srx.clab.yaml
