@@ -1,0 +1,11 @@
+name: vsrx
+prefix: __lab-name
+
+topology:
+  kinds:
+    juniper_vsrx:
+      image: vrnetlab/vr-vsrx:20.2R1.10
+
+  nodes:
+    r1:
+      kind: juniper_vsrx
