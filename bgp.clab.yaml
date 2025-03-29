@@ -10,21 +10,12 @@ topology:
     r1-node0:
       kind: juniper_vsrx
       startup-config: r1-node0.cfg
-      interfaces:
-        - name: ge-0/0/0  # Data interface
-        - name: ge-0/0/5  # Control link
-        - name: ge-0/0/6  # Fabric link
 
     r1-node1:
       kind: juniper_vsrx
-      interfaces:
-        - name: ge-5/0/0  # Data interface
-        - name: ge-5/0/5  # Control link
-        - name: ge-5/0/6  # Fabric link
 
   links:
-    - endpoints: ["as65000-h1:eth1", "as65000-r1:eth3"]
-    - endpoints: ["as65001-h1:eth1", "as65001-r1:eth3"]
-    - endpoints: ["as65000-r1:eth1", "as65001-r1:eth1"]
-    - endpoints: ["as65000-r1:eth2", "as65001-r1:eth2"]
+    - endpoints: ["node0:ge-0/0/5", "node1:ge-0/0/5"]  # Control link
+    - endpoints: ["node0:ge-0/0/6", "node1:ge-0/0/6"]  # Fabric link 
+    - endpoints: ["node0:ge-0/0/0", "node1:ge-0/0/0"]  # Data cross-connect
 
