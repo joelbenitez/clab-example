@@ -1,46 +1,26 @@
-name: bgp-lab
+name: vsrx-cluster
 prefix: __lab-name
 
 topology:
   kinds:
     juniper_vsrx:
       image: vrnetlab/vr-vsrx:20.2R1.10
-    linux:
-      image: nicolaka/netshoot:latest
-      group: server
 
   nodes:
-    as65000-r1:
+    r1-node0:
       kind: juniper_vsrx
-      startup-config: as65000-r1.cfg
+      startup-config: r1-node0.cfg
+      interfaces:
+        - name: ge-0/0/0  # Data interface
+        - name: ge-0/0/5  # Control link
+        - name: ge-0/0/6  # Fabric link
 
-    as65001-r1:
+    r1-node1:
       kind: juniper_vsrx
-      startup-config: as65001-r1.cfg
-
-    as65000-h1:
-      kind: linux
-      stages:
-        create:
-          wait-for:
-            - node: as65000-r1
-              stage: healthy
-      exec:
-        - "ip address add dev eth1 20.0.0.2/24"
-        - "ip route delete default"
-        - "ip route add 0.0.0.0/0 via 20.0.0.1"
-
-    as65001-h1:
-      kind: linux
-      stages:
-        create:
-          wait-for:
-            - node: as65001-r1
-              stage: healthy
-      exec:
-        - "ip address add dev eth1 30.0.0.2/24"
-        - "ip route delete default"
-        - "ip route add 0.0.0.0/0 via 30.0.0.1"
+      interfaces:
+        - name: ge-5/0/0  # Data interface
+        - name: ge-5/0/5  # Control link
+        - name: ge-5/0/6  # Fabric link
 
   links:
     - endpoints: ["as65000-h1:eth1", "as65000-r1:eth3"]
