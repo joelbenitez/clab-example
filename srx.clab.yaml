@@ -1,11 +1,48 @@
-name: vsrx
+name: bgp-lab
 prefix: __lab-name
 
 topology:
   kinds:
     juniper_vsrx:
       image: vrnetlab/vr-vsrx:20.2R1.10
+    linux:
+      image: nicolaka/netshoot:latest
+      group: server
 
   nodes:
     r1:
       kind: juniper_vsrx
+
+    r2:
+      kind: juniper_vsrx
+
+    h1:
+      kind: linux
+      stages:
+        create:
+          wait-for:
+            - node: r1
+              stage: healthy
+      exec:
+        - "ip address add dev eth1 20.0.0.2/24"
+        - "ip route delete default"
+        - "ip route add 0.0.0.0/0 via 20.0.0.1"
+
+    h2:
+      kind: linux
+      stages:
+        create:
+          wait-for:
+            - node: r2
+              stage: healthy
+      exec:
+        - "ip address add dev eth1 30.0.0.2/24"
+        - "ip route delete default"
+        - "ip route add 0.0.0.0/0 via 30.0.0.1"
+
+  links:
+    - endpoints: ["h1:eth1", "r1:eth3"]
+    - endpoints: ["h1:eth1", "r1:eth3"]
+    - endpoints: ["r1:eth1", "r1:eth1"]
+    - endpoints: ["r1:eth2", "r1:eth2"]
+
